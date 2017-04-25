@@ -1,0 +1,17 @@
+# General
+*.log
+.DS_Store
+.project
+.strong-pm
+*/node_modules
+*/logs
+*/npm-debug.log
+*/.env
+
+# Shared ressource
+config/env/production.env
+
+# Api
+api/node_modules/*
+api/src/queues/*
+api/src/routes/home/test.js

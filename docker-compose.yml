@@ -1,0 +1,27 @@
+version: '2'
+services:
+
+  mongodb:
+    image: mongo:3.4.3
+    container_name: android_mongo
+    restart: always
+    volumes:
+      - "../mongo_data:/data/db"
+    ports:
+      - 27017:27017
+
+  api:
+    build: ./api
+    container_name: android_api
+    restart: always
+    tty: true
+    environment:
+      - COMPOSE_HTTP_TIMEOUT=200
+      - NODE_ENV=development
+    volumes:
+      - "./api:/api"
+      - "./config:/api/config"
+    depends_on:
+      - mongodb
+    ports:
+      - 8000:8000
