@@ -12,7 +12,7 @@ const seed = [];
 for ( let i = 0; i < nbr; ++i ) {
     seed.push((callback) => {
 
-        const event = new EventModel({
+        const event = {
             name: faker.name.findName(),
             imageUrl: faker.image.imageUrl(),
             description: faker.lorem.paragraph(),
@@ -21,7 +21,7 @@ for ( let i = 0; i < nbr; ++i ) {
               latitude: faker.address.latitude(),
               longitude: faker.address.longitude()
             }
-        }); // Call save methods to save data into database
+        }; // Call save methods to save data into database
         // event.save((err, data) => {
         //
         //     if (err) {
@@ -43,9 +43,15 @@ for ( let i = 0; i < nbr; ++i ) {
           json: true };
 
         request(options, function (error, response, body) {
-          if (error) throw new Error(error);
+          if (error) {
+            console.log(err);
+            callback(err);
+          } else {
+            console.log(body);
+            callback(null, i);
+          }
 
-          console.log(body);
+
         });
 
     });
