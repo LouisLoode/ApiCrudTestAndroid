@@ -1,8 +1,9 @@
-require( 'babel-register' );
+require( 'babel-core/register' );
 
 const Async = require('async');
 const faker = require('faker');
-require('./config/database');
+const request = require('request');
+// require('./src/config/database');
 const EventModel = require('./src/models/event');
 
 const nbr = 25;
@@ -21,17 +22,32 @@ for ( let i = 0; i < nbr; ++i ) {
               longitude: faker.address.longitude()
             }
         }); // Call save methods to save data into database
-        event.save((err, data) => {
+        // event.save((err, data) => {
+        //
+        //     if (err) {
+        //         console.log('Error during import');
+        //         console.log(err);
+        //     }
+        //     else {
+        //         console.log('Good import');
+        //         callback(null, i);
+        //     }
+        // });
 
-            if (err) {
-                console.log('Error during import');
-                console.log(err);
-            }
-            else {
-                console.log('Good import');
-                callback(null, i);
-            }
+
+
+        var options = { method: 'POST',
+          url: 'http://163.172.29.197:8000/events',
+          headers: { 'content-type': 'application/json' },
+          body: event,
+          json: true };
+
+        request(options, function (error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
         });
+
     });
 }
 

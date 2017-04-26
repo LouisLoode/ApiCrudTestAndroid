@@ -52,7 +52,7 @@ const eventHandler = {
                 res(Boom.serverUnavailable('Failed to get data', error));
             }
             else {
-                if (data.length === 0) {
+                if (data.length === null) {
                     res(Boom.notFound('Event Not Found', data));
                 }
                 else {
