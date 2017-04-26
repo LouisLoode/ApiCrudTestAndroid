@@ -1,4 +1,4 @@
-require( 'babel-core/register' );
+require( 'babel-register' );
 
 const Async = require('async');
 const faker = require('faker');

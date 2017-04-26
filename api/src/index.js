@@ -18,9 +18,9 @@ import Swagger from './config/swagger';
 const server = new Hapi.Server();
 
 // bootstrap models
-glob.sync('src/models/*.js', {
+glob.sync('models/*.js', {
     root: __dirname,
-    ignore: 'src/models/**/*.spec.js'
+    ignore: 'models/**/*.spec.js'
 }).forEach((file) => {
 
     require(path.join(__dirname, file));
@@ -76,15 +76,11 @@ if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'test'){
 }
 
 // Load routes
-glob.sync('src/routes/**/*.js', {
-    root: __dirname,
-    ignore: 'src/routes/**/*.spec.js'
-}).forEach((file) => {
-
-    const route = require(path.join(__dirname, file));
-    server.route(route);
-
-});
+server.route(require(path.join(__dirname, 'routes/events/deleteEvent')));
+server.route(require(path.join(__dirname, 'routes/events/getAllEvents')));
+server.route(require(path.join(__dirname, 'routes/events/getOneEvent')));
+server.route(require(path.join(__dirname, 'routes/events/postEvent')));
+server.route(require(path.join(__dirname, 'routes/events/putEvent')));
 
 // if (process.env.NODE_ENV !== 'test') {
 server.register({ register: Blipp, options: { showAuth : true } }, (err) => {
